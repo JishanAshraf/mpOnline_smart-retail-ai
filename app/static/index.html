@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartRetail - Customer Intelligence Platform</title>
+  <meta name="description" content="AI-Powered Smart Retail & Customer Intelligence Platform combining facial recognition, product classification, sentiment analysis, and support chatbot.">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo-group">
+        <div class="brand-emblem">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-name">Smart<span>Retail</span></h1>
+        </div>
+      </div>
+
+      <a href="/docs" target="_blank" class="api-docs-link">
+        Swagger API Docs ↗
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="tab-overview">
+        <span>📊</span> Executive Overview
+      </button>
+      <button class="tab-btn" data-tab="tab-vision">
+        <span>📷</span> Vision AI Studio
+      </button>
+      <button class="tab-btn" data-tab="tab-sentiment">
+        <span>📝</span> Sentiment Analysis
+      </button>
+      <button class="tab-btn" data-tab="tab-chatbot">
+        <span>💬</span> AI Support Bot
+      </button>
+    </nav>
+
+    <!-- Tab 1: Executive Overview -->
+    <section id="tab-overview" class="tab-content active">
+      <div class="metrics-grid">
+        <!-- Visits Card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Total Store Visits</span>
+            <div class="card-icon">👥</div>
+          </div>
+          <div class="metric-value" id="metric-visits">1,452</div>
+          <div class="metric-sub">
+            <span class="trend-up">↑ +14.2%</span> vs previous month
+          </div>
+        </div>
+
+        <!-- Sentiment Card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Customer Satisfaction</span>
+            <div class="card-icon">😊</div>
+          </div>
+          <div class="metric-value" id="metric-pos-ratio">67% Positive</div>
+          <div class="metric-sub">
+            Based on recent customer reviews
+          </div>
+        </div>
+
+        <!-- System Pipeline Status -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Active AI Services</span>
+            <div class="card-icon">⚡</div>
+          </div>
+          <div class="metric-value">4 / 4</div>
+          <div class="metric-sub">
+            Vision, NLP, Chatbot & Analytics pipelines
+          </div>
+        </div>
+      </div>
+
+      <div class="studio-grid">
+        <!-- Sentiment Distribution Card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Customer Review Sentiment Breakdown</span>
+          </div>
+          <div class="sentiment-bar-container">
+            <div class="bar-row">
+              <div class="bar-label-group">
+                <span>Positive Reviews</span>
+                <span id="pos-count">980 (67%)</span>
+              </div>
+              <div class="bar-bg"><div class="bar-fill fill-pos" id="bar-pos" style="width: 67%;"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label-group">
+                <span>Neutral Reviews</span>
+                <span id="neu-count">330 (23%)</span>
+              </div>
+              <div class="bar-bg"><div class="bar-fill fill-neu" id="bar-neu" style="width: 23%;"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label-group">
+                <span>Negative Reviews</span>
+                <span id="neg-count">142 (10%)</span>
+              </div>
+              <div class="bar-bg"><div class="bar-fill fill-neg" id="bar-neg" style="width: 10%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Intents Card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Top Customer Inquiry Topics</span>
+          </div>
+          <div id="top-intents-list" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Vision AI Studio -->
+    <section id="tab-vision" class="tab-content">
+      <div class="studio-grid">
+        <!-- Face Recognition Panel -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Customer Facial Recognition (`/recognize-face`)</span>
+            <div class="card-icon">👤</div>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-dim); margin-bottom: 1rem;">
+            Upload a customer entry photo to extract facial encodings and compare against registered store member profiles.
+          </p>
+
+          <div class="dropzone" id="face-dropzone">
+            <img id="face-preview" class="image-preview" alt="Face Preview">
+            <div class="dropzone-icon">📷</div>
+            <div class="dropzone-text">Click or drag customer photo here</div>
+            <div class="dropzone-hint">Supports JPEG, PNG</div>
+            <input type="file" id="face-file-input" class="file-input" accept="image/*">
+          </div>
+
+          <div id="face-result" class="result-box"></div>
+        </div>
+
+        <!-- Product Classifier Panel -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">MobileNetV2 Product Classification (`/classify-product`)</span>
+            <div class="card-icon">📦</div>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-dim); margin-bottom: 1rem;">
+            Upload a retail product image for automatic category detection and confidence scoring.
+          </p>
+
+          <div class="dropzone" id="product-dropzone">
+            <img id="product-preview" class="image-preview" alt="Product Preview">
+            <div class="dropzone-icon">🏷️</div>
+            <div class="dropzone-text">Click or drag product image here</div>
+            <div class="dropzone-hint">Supports JPEG, PNG</div>
+            <input type="file" id="product-file-input" class="file-input" accept="image/*">
+          </div>
+
+          <div id="product-result" class="result-box"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Sentiment Analysis -->
+    <section id="tab-sentiment" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Customer Review Sentiment Analyzer (`/analyze-sentiment`)</span>
+          <div class="card-icon">📝</div>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-dim); margin-bottom: 1rem;">
+          Type or select sample customer feedback below to evaluate sentiment classification using NLTK preprocessing.
+        </p>
+
+        <textarea id="sentiment-input" class="input-field" style="width: 100%; height: 110px; resize: vertical;" placeholder="Type customer review feedback..."></textarea>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+          <div class="chip-group" style="margin: 0;">
+            <button class="chip sentiment-chip" data-text="The headphones arrived fast and sound quality is amazing!">Sample 1 (Positive)</button>
+            <button class="chip sentiment-chip" data-text="Terrible support. Package was delayed for over two weeks.">Sample 2 (Negative)</button>
+            <button class="chip sentiment-chip" data-text="Decent shoes for the price. Quality is average.">Sample 3 (Neutral)</button>
+          </div>
+
+          <button id="btn-analyze-sentiment" class="btn-primary">
+            <span>⚡</span> Analyze Sentiment
+          </button>
+        </div>
+
+        <div id="sentiment-result" class="result-box" style="margin-top: 1.5rem;"></div>
+      </div>
+    </section>
+
+    <!-- Tab 4: AI Support Bot -->
+    <section id="tab-chatbot" class="tab-content">
+      <div class="card" style="padding: 1.25rem;">
+        <div class="card-header" style="margin-bottom: 0.75rem;">
+          <div>
+            <span class="card-title">Smart Retail FAQ Assistant (`/chatbot`)</span>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.2rem;">
+              Hybrid support bot: Rule-based pattern matching first (`intents.json`), ML intent classifier fallback.
+            </p>
+          </div>
+          <div class="card-icon">💬</div>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+          <div class="chat-messages" id="chat-messages">
+            <!-- Initial Welcome Message -->
+            <div class="message bot">
+              <div class="message-avatar">🤖</div>
+              <div>
+                <div class="message-content">
+                  Hello! Welcome to SmartRetail Support. How can I assist you with your orders, returns, store hours, or shipping today?
+                </div>
+                <div class="message-meta">
+                  <span class="badge badge-primary" style="font-size: 0.65rem;">System Ready</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input Area -->
+          <div class="chat-input-area">
+            <input type="text" id="chat-input" class="input-field" placeholder="Ask a question (e.g., Where is my order?)...">
+            <button id="btn-send-chat" class="btn-primary">
+              Send ➢
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Question Chips -->
+        <div class="chip-group">
+          <span style="font-size: 0.8rem; color: var(--text-dim); align-self: center;">Try asking:</span>
+          <button class="chip chat-chip" data-text="Where is my order status?">Where is my order status?</button>
+          <button class="chip chat-chip" data-text="What is your return policy?">What is your return policy?</button>
+          <button class="chip chat-chip" data-text="What are your store hours?">What are your store hours?</button>
+          <button class="chip chat-chip" data-text="Do you offer express shipping?">Do you offer express shipping?</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

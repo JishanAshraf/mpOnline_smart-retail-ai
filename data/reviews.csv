@@ -1,0 +1,21 @@
+review_id,review_text,sentiment,rating
+1,"The headphones arrived fast and sound quality is amazing! Super satisfied.",positive,5
+2,"Terrible customer support. Package was delayed for over two weeks.",negative,1
+3,"Decent shoes for the price. Quality is average nothing special.",neutral,3
+4,"Love the material of this shirt. Soft, comfortable, and fits perfectly.",positive,5
+5,"The screen broke on day two. Extremely disappointed with the product build.",negative,1
+6,"Store pickup was seamless. Staff were polite and helpful.",positive,5
+7,"Item arrived in wrong size. Return process took longer than expected.",negative,2
+8,"Average product quality. Packaging was slightly damaged upon arrival.",neutral,3
+9,"Fantastic wireless earbuds! Battery life easily lasts all day.",positive,5
+10,"Order was cancelled without any notification. Horrible experience.",negative,1
+11,"Standard delivery speed. Product matches the website pictures.",neutral,3
+12,"Best retail shopping app experience! Very easy checkout.",positive,5
+13,"The color does not match the online photo at all. Returning it.",negative,2
+14,"Good value for money. Would purchase again.",positive,4
+15,"Customer service representative was unhelpful and rude.",negative,1
+16,"Comfortable jacket. Keeps warm in winter weather.",positive,5
+17,"Satisfactory experience overall. Nothing extraordinary.",neutral,3
+18,"Fast shipping and excellent gift packaging!",positive,5
+19,"Refund took almost three weeks to process.",negative,1
+20,"Product functions as described in user manual.",neutral,4

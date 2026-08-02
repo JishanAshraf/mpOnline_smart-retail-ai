@@ -1,0 +1,192 @@
+{
+  "intents": [
+    {
+      "intent": "greeting",
+      "patterns": ["hello", "hi", "hey", "good morning", "good evening", "greetings"],
+      "responses": [
+        "Hello! Welcome to Smart Retail. How can I help you today?",
+        "Hi there! How may I assist with your shopping experience?",
+        "Greetings! Feel free to ask any questions about our products or orders."
+      ]
+    },
+    {
+      "intent": "goodbye",
+      "patterns": ["bye", "goodbye", "see you later", "have a nice day", "thanks bye"],
+      "responses": [
+        "Thank you for shopping with us! Have a wonderful day!",
+        "Goodbye! Reach out anytime if you need further assistance.",
+        "Thanks for visiting Smart Retail! See you soon."
+      ]
+    },
+    {
+      "intent": "order_status",
+      "patterns": ["where is my order", "order status", "track my package", "check order status", "when will my shipment arrive"],
+      "responses": [
+        "You can track your order status by logging into your account and visiting the 'My Orders' section.",
+        "To check your shipment progress, please enter your order ID in the tracking portal.",
+        "Your order details and estimated delivery time are available in your confirmation email."
+      ]
+    },
+    {
+      "intent": "return_policy",
+      "patterns": ["what is your return policy", "how to return an item", "can I return this product", "return window", "days to return"],
+      "responses": [
+        "We offer a 30-day hassle-free return policy for all unworn or unused items with original receipts.",
+        "Items can be returned within 30 days of purchase for a full refund or exchange.",
+        "To initiate a return, visit our online Returns Center or drop by any of our physical stores."
+      ]
+    },
+    {
+      "intent": "store_hours",
+      "patterns": ["what are your store hours", "when do you open", "closing time", "is the store open today", "operating hours"],
+      "responses": [
+        "Our physical retail stores are open Monday through Saturday from 9:00 AM to 9:00 PM, and Sunday from 10:00 AM to 6:00 PM.",
+        "We are open daily from 9 AM to 9 PM (Sunday hours: 10 AM to 6 PM).",
+        "Store hours vary on holidays. Check our website store locator for updated schedule."
+      ]
+    },
+    {
+      "intent": "shipping_methods",
+      "patterns": ["what shipping options do you have", "express shipping", "overnight shipping", "delivery options", "standard shipping speed"],
+      "responses": [
+        "We provide Standard (3-5 business days), Express (2 business days), and Overnight delivery options.",
+        "Orders over $50 qualify for free Standard Shipping within the continental US."
+      ]
+    },
+    {
+      "intent": "refund_timeline",
+      "patterns": ["when will I get my refund", "how long does refund take", "refund status", "money back duration"],
+      "responses": [
+        "Once your return is received and inspected, refunds are processed within 5–7 business days back to your original payment method.",
+        "Refunds typically take 5-7 business days to reflect in your bank account after item inspection."
+      ]
+    },
+    {
+      "intent": "payment_methods",
+      "patterns": ["what payment methods are accepted", "can I pay with PayPal", "do you accept Apple Pay", "credit card options", "cash on delivery"],
+      "responses": [
+        "We accept Visa, MasterCard, American Express, PayPal, Apple Pay, Google Pay, and Smart Retail gift cards.",
+        "You can securely complete purchases using major credit cards, PayPal, or contactless digital wallets."
+      ]
+    },
+    {
+      "intent": "gift_cards",
+      "patterns": ["do you sell gift cards", "how to check gift card balance", "buy digital gift card", "redeem gift voucher"],
+      "responses": [
+        "Yes! Digital and physical gift cards are available starting at $10. You can check your gift card balance at checkout."
+      ]
+    },
+    {
+      "intent": "discounts_promotions",
+      "patterns": ["are there any promo codes", "discount coupon", "sales ongoing", "student discount", "first purchase offer"],
+      "responses": [
+        "Subscribe to our newsletter to receive 15% off your first order! Check our 'Offers' page for current seasonal deals."
+      ]
+    },
+    {
+      "intent": "size_guide",
+      "patterns": ["how do I know my size", "size chart", "clothing fit guide", "shoe size conversion"],
+      "responses": [
+        "Every product page features an interactive 'Size Guide' with exact chest, waist, and length measurements."
+      ]
+    },
+    {
+      "intent": "contact_support",
+      "patterns": ["speak to a human", "customer service phone number", "support email", "agent contact"],
+      "responses": [
+        "You can reach our customer support team 24/7 at support@smartretail.ai or call us toll-free at 1-800-555-RETAIL."
+      ]
+    },
+    {
+      "intent": "cancel_order",
+      "patterns": ["can I cancel my order", "how to cancel an order", "stop order dispatch"],
+      "responses": [
+        "Orders can be canceled within 1 hour of placement from your Account Dashboard under 'Active Orders'."
+      ]
+    },
+    {
+      "intent": "change_shipping_address",
+      "patterns": ["change delivery address", "wrong shipping address", "update shipping address"],
+      "responses": [
+        "Please contact customer support immediately to modify your shipping address before your order dispatches."
+      ]
+    },
+    {
+      "intent": "out_of_stock",
+      "patterns": ["when will this item be back in stock", "out of stock alert", "restock notification"],
+      "responses": [
+        "Click the 'Notify Me When Available' button on the product page to receive an instant email alert upon restocking."
+      ]
+    },
+    {
+      "intent": "price_matching",
+      "patterns": ["do you match prices", "price match policy", "cheaper on competitor site"],
+      "responses": [
+        "We offer price matching for identical items sold by authorized major retailers within 14 days of purchase."
+      ]
+    },
+    {
+      "intent": "store_locations",
+      "patterns": ["where are your stores located", "find store near me", "retail locations", "store address"],
+      "responses": [
+        "Use our interactive Store Locator on smartretail.ai/stores to find your nearest retail store address and map directions."
+      ]
+    },
+    {
+      "intent": "account_recovery",
+      "patterns": ["forgot password", "cannot log in", "reset password", "account locked"],
+      "responses": [
+        "Click 'Forgot Password' on the login screen, and we will send a password reset link to your registered email address."
+      ]
+    },
+    {
+      "intent": "loyalty_program",
+      "patterns": ["retail rewards program", "how to earn points", "membership perks", "vip club"],
+      "responses": [
+        "Join Smart Retail Rewards for free to earn 1 point per $1 spent, redeemable for exclusive discounts and free shipping!"
+      ]
+    },
+    {
+      "intent": "bulk_orders",
+      "patterns": ["do you offer wholesale", "bulk purchasing", "corporate gifting", "large quantity discount"],
+      "responses": [
+        "For bulk purchases or corporate sales, please contact our wholesale team at business@smartretail.ai."
+      ]
+    },
+    {
+      "intent": "security_privacy",
+      "patterns": ["is my credit card data safe", "privacy policy", "data protection"],
+      "responses": [
+        "All transactions are protected with enterprise-grade 256-bit SSL encryption. We never sell your personal data."
+      ]
+    },
+    {
+      "intent": "warranty_info",
+      "patterns": ["does this product have warranty", "repair service", "guarantee duration"],
+      "responses": [
+        "All electronic items include a 1-year standard manufacturer warranty covering technical defects."
+      ]
+    },
+    {
+      "intent": "exchange_item",
+      "patterns": ["can I exchange size", "swap color", "exchange process"],
+      "responses": [
+        "Exchanges for a different size or color are completely free! Select 'Exchange' when generating your prepaid return label."
+      ]
+    },
+    {
+      "intent": "feedback_complaint",
+      "patterns": ["file a complaint", "leave review", "store feedback", "bad service"],
+      "responses": [
+        "We value your feedback. Please share your thoughts with our manager team at feedback@smartretail.ai."
+      ]
+    },
+    {
+      "intent": "curbside_pickup",
+      "patterns": ["do you have buy online pick up in store", "bopis", "curbside pickup"],
+      "responses": [
+        "Yes! Select 'Free Store Pickup' at checkout, and your order will be ready within 2 hours at your chosen store location."
+      ]
+    }
+  ]
+}

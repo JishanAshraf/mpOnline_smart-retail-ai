@@ -1,0 +1,9 @@
+{
+  "python.defaultInterpreterPath": "/Users/jishanashraf/mpOnline project/smart-retail-ai/venv/bin/python",
+  "python.analysis.extraPaths": [
+    "/Users/jishanashraf/mpOnline project/smart-retail-ai"
+  ],
+  "python.autoComplete.extraPaths": [
+    "/Users/jishanashraf/mpOnline project/smart-retail-ai"
+  ]
+}
