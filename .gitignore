@@ -28,3 +28,4 @@ app/models/*.pkl
 # Operating System files
 .DS_Store
 Thumbs.db
+report.md
