@@ -1,7 +1,10 @@
 # Project Proposal: AI-Powered Smart Retail & Customer Intelligence Platform
 
-## 1. Project Title
-**AI-Powered Smart Retail & Customer Intelligence Platform**
+**Author:** Jishan Ashraf  
+**Registration No.:** 23MEI10015  
+**Enrollment No.:** IN26013868  
+**Institution:** VIT Bhopal University  
+**Course:** Machine Learning & Artificial Intelligence  
 
 ---
 

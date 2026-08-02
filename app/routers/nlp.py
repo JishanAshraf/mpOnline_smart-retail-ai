@@ -1,4 +1,6 @@
 """NLP Router: Customer review sentiment analysis endpoint.
+
+Includes input text validation, payload length safeguards, and secure error handling.
 """
 
 from fastapi import APIRouter, Depends, Request, HTTPException
@@ -11,6 +13,8 @@ except ImportError:
     from ..services.nlp_service import NLPService
 
 router = APIRouter(tags=["NLP & Sentiment Services"])
+
+MAX_TEXT_LENGTH = 5000  # 5,000 character limit per review
 
 
 def get_nlp_service(request: Request) -> NLPService:
@@ -30,11 +34,14 @@ async def analyze_sentiment(
     payload: SentimentRequest,
     nlp_service: NLPService = Depends(get_nlp_service)
 ):
-    """Accepts review text, performs NLTK cleaning (lowercasing, stopword removal, lemmatization),
-    runs sentiment model inference, and returns sentiment classification and confidence score.
+    """Accepts review text (max 5,000 chars), performs NLTK cleaning (lowercasing, stopword removal,
+    lemmatization), runs sentiment model inference, and returns sentiment classification.
     """
     if not payload.text or not payload.text.strip():
-        raise HTTPException(status_code=400, detail="Input text cannot be empty.")
+        raise HTTPException(status_code=400, detail="Input text string cannot be empty.")
+
+    if len(payload.text) > MAX_TEXT_LENGTH:
+        raise HTTPException(status_code=400, detail=f"Text length exceeds maximum limit of {MAX_TEXT_LENGTH} characters.")
 
     try:
         text, sentiment, confidence = nlp_service.analyze_sentiment(payload.text)
@@ -44,4 +51,5 @@ async def analyze_sentiment(
             confidence=confidence
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error analyzing sentiment: {str(e)}")
+        print(f"[NLPRouter] Sentiment analysis error: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error analyzing review sentiment.")

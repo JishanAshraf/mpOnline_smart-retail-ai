@@ -1,4 +1,6 @@
 """Chatbot Router: Retail FAQ bot & customer analytics dashboard endpoints.
+
+Includes message validation, length safeguards, and secure error handling.
 """
 
 from fastapi import APIRouter, Depends, Request, HTTPException
@@ -11,6 +13,8 @@ except ImportError:
     from ..services.chatbot_service import ChatbotService
 
 router = APIRouter(tags=["Chatbot & Analytics Services"])
+
+MAX_MESSAGE_LENGTH = 1000  # 1,000 character limit per chatbot message
 
 
 def get_chatbot_service(request: Request) -> ChatbotService:
@@ -30,11 +34,14 @@ async def chatbot_reply(
     payload: ChatbotRequest,
     chatbot_service: ChatbotService = Depends(get_chatbot_service)
 ):
-    """Accepts customer inquiry message, applies hybrid matching (rule-based intents.json first,
-    ML classifier fallback second), and returns conversational reply with matched intent tag.
+    """Accepts customer inquiry message (max 1,000 chars), applies hybrid matching (rule-based
+    intents.json first, ML classifier fallback second), and returns conversational reply with matched intent tag.
     """
     if not payload.message or not payload.message.strip():
         raise HTTPException(status_code=400, detail="Message string cannot be empty.")
+
+    if len(payload.message) > MAX_MESSAGE_LENGTH:
+        raise HTTPException(status_code=400, detail=f"Message length exceeds maximum limit of {MAX_MESSAGE_LENGTH} characters.")
 
     try:
         reply, intent, match_type = chatbot_service.get_response(payload.message)
@@ -44,7 +51,8 @@ async def chatbot_reply(
             match_type=match_type
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error generating chatbot response: {str(e)}")
+        print(f"[ChatbotRouter] Chatbot generation error: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error generating chatbot response.")
 
 
 @router.get(

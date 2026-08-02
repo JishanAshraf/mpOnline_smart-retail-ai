@@ -1,4 +1,6 @@
 """Vision Router: Face recognition and Product classification endpoints.
+
+Includes input validation, file size safeguards (max 10MB), and secure error handling.
 """
 
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Request
@@ -11,6 +13,8 @@ except ImportError:
     from ..services.cv_service import CVService
 
 router = APIRouter(tags=["Vision Services"])
+
+MAX_IMAGE_SIZE = 10 * 1024 * 1024  # 10 MB limit
 
 
 def get_cv_service(request: Request) -> CVService:
@@ -30,14 +34,18 @@ async def recognize_face(
     file: UploadFile = File(...),
     cv_service: CVService = Depends(get_cv_service)
 ):
-    """Accepts an uploaded image file, detects faces, compares encodings against face database,
-    and returns matched customer ID, recognition status, and confidence score.
+    """Accepts an uploaded image file (max 10MB), detects faces, compares encodings
+    against customer database, and returns matched customer ID, status, and confidence.
     """
     if not file.content_type or not file.content_type.startswith("image/"):
-        raise HTTPException(status_code=400, detail="Uploaded file must be an image.")
+        raise HTTPException(status_code=400, detail="Uploaded file must be a valid image (JPEG/PNG).")
+
+    contents = await file.read()
+
+    if len(contents) > MAX_IMAGE_SIZE:
+        raise HTTPException(status_code=400, detail="Image file size exceeds maximum 10MB limit.")
 
     try:
-        contents = await file.read()
         customer_id, status, confidence = cv_service.recognize_face(contents)
         return FaceRecognitionResponse(
             customer_id=customer_id,
@@ -45,7 +53,8 @@ async def recognize_face(
             confidence=confidence
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing image for face recognition: {str(e)}")
+        print(f"[VisionRouter] Face recognition error: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error processing face recognition.")
 
 
 @router.post(
@@ -57,18 +66,23 @@ async def classify_product(
     file: UploadFile = File(...),
     cv_service: CVService = Depends(get_cv_service)
 ):
-    """Accepts an uploaded product image file, performs MobileNetV2 feature extraction & classification,
-    and returns predicted product category and model confidence.
+    """Accepts an uploaded product image file (max 10MB), performs MobileNetV2 feature extraction,
+    and returns predicted product category and model confidence score.
     """
     if not file.content_type or not file.content_type.startswith("image/"):
-        raise HTTPException(status_code=400, detail="Uploaded file must be an image.")
+        raise HTTPException(status_code=400, detail="Uploaded file must be a valid image (JPEG/PNG).")
+
+    contents = await file.read()
+
+    if len(contents) > MAX_IMAGE_SIZE:
+        raise HTTPException(status_code=400, detail="Image file size exceeds maximum 10MB limit.")
 
     try:
-        contents = await file.read()
         category, confidence = cv_service.classify_product(contents)
         return ProductClassificationResponse(
             category=category,
             confidence=confidence
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error classifying product image: {str(e)}")
+        print(f"[VisionRouter] Product classification error: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error classifying product image.")

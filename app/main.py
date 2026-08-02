@@ -8,16 +8,29 @@ import os
 import sys
 from contextlib import asynccontextmanager
 
-# Add parent directory to sys.path to ensure module imports resolve across all environments
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add project root and app directory to sys.path for IDE & runtime import resolution
+_current_dir = os.path.dirname(os.path.abspath(__file__))
+_project_root = os.path.dirname(_current_dir)
+if _project_root not in sys.path:
+    sys.path.insert(0, _project_root)
+if _current_dir not in sys.path:
+    sys.path.insert(0, _current_dir)
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
-from app.routers import vision, nlp, chatbot
-from app.services.cv_service import CVService
-from app.services.nlp_service import NLPService
-from app.services.chatbot_service import ChatbotService
+try:
+    from app.routers import vision, nlp, chatbot
+    from app.services.cv_service import CVService
+    from app.services.nlp_service import NLPService
+    from app.services.chatbot_service import ChatbotService
+except ImportError:
+    from routers import vision, nlp, chatbot
+    from services.cv_service import CVService
+    from services.nlp_service import NLPService
+    from services.chatbot_service import ChatbotService
 
 
 @asynccontextmanager
@@ -63,16 +76,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-
 # Include API Routers
 app.include_router(vision.router)
 app.include_router(nlp.router)
 app.include_router(chatbot.router)
 
 # Mount Static Files directory for Dashboard UI
-static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+static_dir = os.path.join(_current_dir, "static")
 if os.path.exists(static_dir):
     app.mount("/static", StaticFiles(directory=static_dir), name="static")
 

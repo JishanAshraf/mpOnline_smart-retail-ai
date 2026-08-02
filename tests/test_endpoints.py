@@ -1,6 +1,6 @@
 """Pytest suite for verifying all FastAPI endpoints using TestClient.
 
-Tests status codes and response JSON schema structures with dummy inputs.
+Tests status codes, response JSON schema structures, and security input validations.
 """
 
 import io
@@ -58,6 +58,13 @@ def test_recognize_face_endpoint():
     assert isinstance(data["confidence"], float)
 
 
+def test_recognize_face_invalid_file_type():
+    """Verify POST /recognize-face rejects non-image files with 400."""
+    files = {"file": ("test.txt", io.BytesIO(b"hello world"), "text/plain")}
+    response = client.post("/recognize-face", files=files)
+    assert response.status_code == 400
+
+
 def test_classify_product_endpoint():
     """Verify POST /classify-product accepts image upload and returns valid response shape."""
     img_bytes = create_dummy_image_bytes()
@@ -83,6 +90,17 @@ def test_analyze_sentiment_endpoint():
     assert "confidence" in data
 
 
+def test_analyze_sentiment_validation():
+    """Verify POST /analyze-sentiment rejects empty or oversized strings with 400."""
+    # Empty string
+    resp_empty = client.post("/analyze-sentiment", json={"text": "   "})
+    assert resp_empty.status_code == 400
+
+    # Oversized string
+    resp_oversized = client.post("/analyze-sentiment", json={"text": "a" * 6000})
+    assert resp_oversized.status_code == 400
+
+
 def test_chatbot_endpoint():
     """Verify POST /chatbot returns intent classification and reply message."""
     payload = {"message": "Where is my order status?", "user_id": "usr_99"}
@@ -92,6 +110,15 @@ def test_chatbot_endpoint():
     assert "message" in data
     assert "intent" in data
     assert "match_type" in data
+
+
+def test_chatbot_validation():
+    """Verify POST /chatbot rejects empty or oversized messages with 400."""
+    resp_empty = client.post("/chatbot", json={"message": ""})
+    assert resp_empty.status_code == 400
+
+    resp_oversized = client.post("/chatbot", json={"message": "x" * 2000})
+    assert resp_oversized.status_code == 400
 
 
 def test_dashboard_stats_endpoint():
