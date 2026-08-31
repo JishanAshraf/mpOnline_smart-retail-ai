@@ -24,7 +24,7 @@ from fastapi.responses import FileResponse
 try:
     from app.routers import vision, nlp, chatbot
     from app.services.cv_service import CVService
-    from app.services.nlp_service import NLPService
+    from app.services.nlp_service import NLPServiceP
     from app.services.chatbot_service import ChatbotService
 except ImportError:
     from routers import vision, nlp, chatbot

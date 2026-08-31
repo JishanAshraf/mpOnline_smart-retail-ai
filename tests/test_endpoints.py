@@ -130,3 +130,21 @@ def test_dashboard_stats_endpoint():
     assert "sentiment_counts" in data
     assert "top_intents" in data
     assert isinstance(data["top_intents"], list)
+
+
+def test_nlp_service_does_not_download_resources_on_startup(monkeypatch):
+    """Verify startup does not block on external NLTK corpus downloads when resources are missing."""
+    import app.services.nlp_service as nlp_module
+
+    def fake_find(*args, **kwargs):
+        raise LookupError("missing")
+
+    def fail_download(*args, **kwargs):
+        raise AssertionError("Startup should not trigger NLTK downloads")
+
+    monkeypatch.setattr(nlp_module.nltk.data, "find", fake_find)
+    monkeypatch.setattr(nlp_module.nltk, "download", fail_download)
+
+    service = nlp_module.NLPService()
+    assert service is not None
+    assert hasattr(service, "stop_words")

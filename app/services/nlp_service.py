@@ -30,21 +30,20 @@ class NLPService:
         self.load_model()
 
     def _init_nltk_resources(self) -> None:
-        """Download required NLTK resources if not present."""
-        resources = ['punkt', 'stopwords', 'wordnet', 'omw-1.4']
-        for resource in resources:
-            try:
-                nltk.data.find(f'tokenizers/{resource}' if resource == 'punkt' else f'corpora/{resource}')
-            except LookupError:
-                try:
-                    nltk.download(resource, quiet=True)
-                except Exception as e:
-                    print(f"[NLPService] Warning downloading NLTK resource '{resource}': {e}")
+        """Initialize optional NLTK resources without blocking startup.
 
+        Attempting to download corpora during app bootstrap can hang in offline or
+        restricted environments. We prefer a safe built-in fallback set and only use
+        NLTK features when the data is already available locally.
+        """
         try:
             self.stop_words = set(stopwords.words('english'))
         except Exception:
             self.stop_words = {"a", "an", "the", "in", "on", "at", "and", "or", "is", "it", "to"}
+
+        # Explicitly avoid network access during startup. The tokenizer and lemmatizer
+        # already fall back to simple string splitting and best-effort lemmatization when
+        # additional NLTK resources are unavailable.
 
     def load_model(self) -> None:
         """Load trained sentiment model & vectorizer from pickle if available."""
